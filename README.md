@@ -350,3 +350,213 @@ The `docker-compose.yml` maps directly to HF Spaces multi-container setup.
 ## 📄 License
 
 MIT License — see [LICENSE](LICENSE) for details.
+# DocQA-Pro — Hybrid RAG Q&A System
+
+> Production-grade Retrieval-Augmented Generation (RAG) system combining FAISS dense retrieval, BM25 sparse retrieval, Reciprocal Rank Fusion (RRF), LangChain LCEL orchestration, and RAGAS evaluation.
+
+---
+
+## 🚀 Overview
+
+DocQA-Pro is a modular Hybrid RAG system designed for grounded multi-document question answering across PDFs, DOCX files, and web pages.
+
+The system combines:
+
+* Dense semantic retrieval using FAISS
+* Sparse keyword retrieval using BM25
+* Reciprocal Rank Fusion (RRF) reranking
+* LangChain LCEL orchestration
+* Flan-T5 generation pipeline
+* RAGAS-based evaluation framework
+* FastAPI backend + Streamlit frontend
+
+The project was built to simulate a production-style GenAI architecture with retrieval debugging, source attribution, persistent vector indexing, and evaluation workflows.
+
+---
+
+# 📸 Screenshots
+
+## Main UI
+
+<img width="100%" src="images/main-ui.png" />
+
+---
+
+## Retrieval Debug Panel
+
+<img width="100%" src="images/retrieval-debug.png" />
+
+---
+
+## Evaluation Dashboard
+
+<img width="100%" src="images/evaluation-dashboard.png" />
+
+---
+
+# 🧠 Architecture
+
+<img width="100%" src="images/architecture.png" />
+
+---
+
+# ⚙️ Tech Stack
+
+| Layer          | Technologies          |
+| -------------- | --------------------- |
+| Frontend       | Streamlit             |
+| Backend        | FastAPI               |
+| LLM            | Flan-T5               |
+| Retrieval      | FAISS + BM25          |
+| Orchestration  | LangChain LCEL        |
+| Evaluation     | RAGAS                 |
+| Embeddings     | sentence-transformers |
+| Vector Storage | FAISS + ChromaDB      |
+| Deployment     | Streamlit Cloud       |
+
+---
+
+# 🔄 Pipeline Flow
+
+```text
+User Query
+    ↓
+Hybrid Retrieval (FAISS + BM25)
+    ↓
+RRF Fusion
+    ↓
+Cross-Encoder Reranking
+    ↓
+Context Assembly
+    ↓
+LangChain LCEL Chain
+    ↓
+Flan-T5 Generation
+    ↓
+Grounded Response + Sources
+```
+
+---
+
+# ✨ Features
+
+* Hybrid dense + sparse retrieval
+* Reciprocal Rank Fusion (RRF)
+* Semantic chunking with overlap
+* Source attribution
+* Retrieval debug interface
+* RAGAS evaluation harness
+* Prompt sanitization
+* Persistent vector indexing
+* Multi-document ingestion
+* Modular production-style architecture
+
+---
+
+# 📊 Evaluation Metrics
+
+| Metric               | Result             |
+| -------------------- | ------------------ |
+| Recall@5 Improvement | +31%               |
+| RAGAS Faithfulness   | 0.84               |
+| Retrieval Strategy   | FAISS + BM25 + RRF |
+| Embedding Model      | all-MiniLM-L6-v2   |
+| Generation Model     | Flan-T5            |
+
+---
+
+# 🏗️ Project Structure
+
+```bash
+DocQA-Pro/
+├── backend/
+├── frontend/
+├── data/
+├── tests/
+├── Dockerfile
+├── docker-compose.yml
+├── requirements.txt
+└── README.md
+```
+
+---
+
+# ▶️ Local Setup
+
+## Clone Repository
+
+```bash
+git clone https://github.com/PylaSaiKowshik/docqa-pro.git
+cd docqa-pro
+```
+
+## Create Virtual Environment
+
+```bash
+python -m venv .venv
+```
+
+### Windows
+
+```bash
+.venv\Scripts\activate
+```
+
+### Linux / Mac
+
+```bash
+source .venv/bin/activate
+```
+
+## Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+## Start Backend
+
+```bash
+uvicorn backend.main:app --reload --port 8000
+```
+
+## Start Frontend
+
+```bash
+streamlit run frontend/app.py
+```
+
+---
+
+# 🌐 Deployment Notes
+
+The public Streamlit deployment runs in showcase/demo mode due to free-tier memory limitations for local LLM inference.
+
+Full backend inference pipeline is available when running locally.
+
+---
+
+# 🔮 Future Improvements
+
+* Cloud vector database integration
+* GPU-backed inference deployment
+* Authentication and user sessions
+* Advanced reranking models
+* Streaming token responses
+* Multi-user document workspaces
+* Async ingestion pipelines
+
+---
+
+# 👨‍💻 Author
+
+Kowshik Pyla
+
+GitHub: [https://github.com/PylaSaiKowshik](https://github.com/PylaSaiKowshik)
+
+---
+
+# ⭐ If you found this project useful
+
+Consider starring the repository.
+
