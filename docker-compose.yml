@@ -1,0 +1,54 @@
+version: "3.9"
+
+services:
+  # ── FastAPI Backend ──────────────────────────────────────────────────────────
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: docqa-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      # Persist indexes and uploads across restarts
+      - ./data:/app/data
+    environment:
+      - LLM_MODEL_NAME=${LLM_MODEL_NAME:-google/flan-t5-large}
+      - EMBED_MODEL_NAME=${EMBED_MODEL_NAME:-sentence-transformers/all-MiniLM-L6-v2}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - CHUNK_SIZE=${CHUNK_SIZE:-512}
+      - CHUNK_OVERLAP=${CHUNK_OVERLAP:-102}
+      - TOP_K=${TOP_K:-5}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c",
+             "import httpx; httpx.get('http://localhost:8000/health').raise_for_status()"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 90s
+
+  # ── Streamlit Frontend ───────────────────────────────────────────────────────
+  frontend:
+    image: python:3.11-slim
+    container_name: docqa-frontend
+    working_dir: /app
+    command: >
+      bash -c "pip install --no-cache-dir streamlit httpx plotly pandas &&
+               streamlit run frontend/app.py
+               --server.port 8501
+               --server.address 0.0.0.0
+               --server.headless true"
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./frontend:/app/frontend
+    environment:
+      - BACKEND_URL=http://backend:8000
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  data:

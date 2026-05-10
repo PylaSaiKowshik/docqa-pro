@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Environment
+.env
+!.env.example
+
+# Data (indexes, uploads — keep structure, ignore content)
+data/uploads/*
+data/vectorstores/*
+data/eval_results.json
+!data/uploads/.gitkeep
+!data/vectorstores/.gitkeep
+
+# HuggingFace model cache
+~/.cache/huggingface/
+.cache/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+*.xml
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Docker
+*.log
